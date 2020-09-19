@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m130524_201442_init extends Migration
+class m130524_201450_init extends Migration
 {
     private string $userTable = 'system_user';
 
@@ -49,6 +49,8 @@ class m130524_201442_init extends Migration
         $this->createIndex('{{%idx-' . $this->userTable . '-phone}}', $userTableWildcardWrapped, 'phone', true);
         $this->createIndex('{{%idx-' . $this->userTable . '-email_confirm_token}}', $userTableWildcardWrapped, 'email_confirm_token', true);
         $this->createIndex('{{%idx-' . $this->userTable . '-password_reset_token}}', $userTableWildcardWrapped, 'password_reset_token', true);
+
+        $this->addColumn($userTableWildcardWrapped, 'verification_token', $this->string()->defaultValue(null));
     }
 
     public function safeDown()
