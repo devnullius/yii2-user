@@ -3,15 +3,18 @@ declare(strict_types=1);
 
 namespace devnullius\user\controllers;
 
+use devnullius\user\forms\auth\LoginForm;
+use devnullius\user\services\Identity;
+use devnullius\user\useCases\auth\AuthService;
 use DomainException;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\Response;
 
-class AuthController extends Controller
+final class AuthController extends Controller
 {
-    private $authService;
+    private AuthService $authService;
 
     public function __construct($id, $module, AuthService $service, $config = [])
     {
