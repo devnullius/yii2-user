@@ -51,12 +51,12 @@ class Module extends BaseModule
 
     final public static function getUserNetworkTableName(): string
     {
-        return static::$userTableName;
+        return static::$userNetworkTableName;
     }
 
     final public static function getUserDeviceTableName(): string
     {
-        return static::$userTableName;
+        return static::$userDeviceTableName;
     }
 
     /**
