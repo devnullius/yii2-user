@@ -15,7 +15,10 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/devnullius/yii2-queue-addon" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/instantiator" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/ezyang/htmlpurifier" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/kartik-v/yii2-field-range" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/kartik-v/yii2-helpers" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/kartik-v/yii2-krajee-base" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/kartik-v/yii2-widget-activeform" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/kartik-v/yii2-widget-datepicker" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/la-haute-societe/yii2-save-relations-behavior" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/myclabs/deep-copy" />

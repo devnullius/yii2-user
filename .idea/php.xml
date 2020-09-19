@@ -62,6 +62,9 @@
       <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-authclient" />
       <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-datepicker" />
       <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-krajee-base" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-field-range" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-activeform" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-helpers" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.4" />
