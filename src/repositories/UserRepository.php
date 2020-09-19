@@ -8,8 +8,9 @@ use devnullius\user\entities\User;
 use RuntimeException;
 use Throwable;
 use yii\db\StaleObjectException;
+use function assert;
 
-class UserRepository
+final class UserRepository
 {
     private EventDispatcher $dispatcher;
 
@@ -18,41 +19,43 @@ class UserRepository
         $this->dispatcher = $dispatcher;
     }
 
-    public function findByUsernameOrEmail($value): ?User
+    public function findByUsernameOrEmail(string $value): ?User
     {
         return User::find()->andWhere(['or', ['username' => $value], ['email' => $value]])->one();
     }
 
-    public function findByNetworkIdentity($network, $identity): ?User
+    public function findByNetworkIdentity(string $network, string $identity): ?User
     {
         return User::find()->joinWith('networks n')->andWhere(['n.network' => $network, 'n.identity' => $identity])->one();
     }
 
-    public function get($id): User
+    public function get(int $id): User
     {
         return $this->getBy(['id' => $id]);
     }
 
     private function getBy(array $condition): User
     {
-        if (!$user = User::find()->andWhere($condition)->limit(1)->one()) {
+        $user = User::find()->andWhere($condition)->limit(1)->one();
+        if ($user === null) {
             throw new NotFoundException('User not found.');
         }
+        assert($user instanceof User);
 
         return $user;
     }
 
-    public function getByEmailConfirmToken($token): User
+    public function getByEmailConfirmToken(string $token): User
     {
         return $this->getBy(['email_confirm_token' => $token]);
     }
 
-    public function getByEmail($email): User
+    public function getByEmail(string $email): User
     {
         return $this->getBy(['email' => $email]);
     }
 
-    public function getByPasswordResetToken($token): User
+    public function getByPasswordResetToken(string $token): User
     {
         return $this->getBy(['password_reset_token' => $token]);
     }

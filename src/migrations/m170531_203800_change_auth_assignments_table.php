@@ -1,12 +1,11 @@
 <?php
 
+use devnullius\user\Module;
 use yii\db\Expression;
 use yii\db\Migration;
 
 class m170531_203800_change_auth_assignments_table extends Migration
 {
-    private string $userTable = 'system_user';
-
     public function safeUp()
     {
         $tableOptions = null;
@@ -14,8 +13,6 @@ class m170531_203800_change_auth_assignments_table extends Migration
             // http://stackoverflow.com/questions/766809/whats-the-difference-between-utf8-general-ci-and-utf8-unicode-ci
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
-
-        $userTableWildcardWrapped = '{{%' . $this->userTable . '}}';
 
         if ($tableOptions !== null) {
             $this->alterColumn('{{%auth_assignments}}', 'user_id', $this->integer()->null());
@@ -29,7 +26,7 @@ class m170531_203800_change_auth_assignments_table extends Migration
             '{{%fk-auth_assignments-user_id}}',
             '{{%auth_assignments}}',
             'user_id',
-            $userTableWildcardWrapped,
+            '{{%' . Module::getUserTableName() . '}}',
             'id',
             'CASCADE'
         );

@@ -7,7 +7,7 @@ use DomainException;
 use Exception;
 use yii\rbac\ManagerInterface;
 
-class RoleManager
+final class RoleManager
 {
     private ManagerInterface $manager;
 
@@ -17,12 +17,12 @@ class RoleManager
     }
 
     /**
-     * @param $userId
-     * @param $name
+     * @param int    $userId
+     * @param string $name
      *
      * @throws Exception
      */
-    public function assign($userId, $name): void
+    public function assign(int $userId, string $name): void
     {
         if (!$role = $this->manager->getRole($name)) {
             throw new DomainException('Role "' . $name . '" does not exist.');

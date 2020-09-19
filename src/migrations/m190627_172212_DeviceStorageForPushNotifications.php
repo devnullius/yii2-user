@@ -1,5 +1,6 @@
 <?php
 
+use devnullius\user\Module;
 use yii\db\Migration;
 
 class m190627_172212_DeviceStorageForPushNotifications extends Migration
@@ -15,7 +16,7 @@ class m190627_172212_DeviceStorageForPushNotifications extends Migration
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
-        $this->createTable('{{%user_device_store}}', [
+        $this->createTable('{{%' . Module::getUserDeviceTableName() . '}}', [
             'id' => $this->bigPrimaryKey(),
             'created_by' => $this->bigInteger()->notNull()
                 ->defaultValue(0)
@@ -33,13 +34,13 @@ class m190627_172212_DeviceStorageForPushNotifications extends Migration
 
         ], $tableOptions);
 
-        $this->createIndex('{{%idx-user-device-store_firebase_id}}', '{{%user_device_store}}', 'firebase_id', true);
+        $this->createIndex('{{%idx-' . Module::getUserDeviceTableName() . '_firebase_id}}', '{{%' . Module::getUserDeviceTableName() . '}}', 'firebase_id', true);
 
         $this->addForeignKey(
-            'fk-user-device-store_user_id',
-            '{{%user_device_store}}',
+            'fk-' . Module::getUserDeviceTableName() . '_user_id',
+            '{{%' . Module::getUserDeviceTableName() . '}}',
             'user_id',
-            '{{%user}}',
+            '{{%' . Module::getUserTableName() . '}}',
             'id',
             'CASCADE',
             'NO ACTION'
@@ -51,7 +52,7 @@ class m190627_172212_DeviceStorageForPushNotifications extends Migration
      */
     public function safeDown()
     {
-        $this->dropForeignKey('fk-user-device-store_user_id', '{{%user_device_store}}');
-        $this->dropTable('{{%user_device_store}}');
+        $this->dropForeignKey('fk-' . Module::getUserDeviceTableName() . '_user_id', '{{%' . Module::getUserDeviceTableName() . '}}');
+        $this->dropTable('{{%' . Module::getUserDeviceTableName() . '}}');
     }
 }

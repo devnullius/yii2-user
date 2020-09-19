@@ -4,13 +4,13 @@ declare(strict_types=1);
 namespace devnullius\user\entities\events;
 
 use devnullius\queue\addon\events\QueueEvent;
-use devnullius\user\entities\User;
+use devnullius\user\entities\UserEntity;
 
-class UserSignUpRequested implements QueueEvent
+final class UserSignUpRequested implements QueueEvent
 {
-    public $user;
+    public UserEntity $user;
 
-    public function __construct(User $user)
+    public function __construct(UserEntity $user)
     {
         $this->user = $user;
     }

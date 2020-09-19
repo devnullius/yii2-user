@@ -10,10 +10,10 @@ use yii\helpers\ArrayHelper;
 
 final class UserCreateForm extends Model
 {
-    public $username;
-    public $email;
+    public string $username;
+    public string $email;
     public $phone;
-    public $password;
+    public string $password;
     public $role;
 
     public function rules(): array

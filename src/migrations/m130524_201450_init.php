@@ -1,11 +1,10 @@
 <?php
 
+use devnullius\user\Module;
 use yii\db\Migration;
 
 class m130524_201450_init extends Migration
 {
-    private string $userTable = 'system_user';
-
     public function safeUp()
     {
         $tableOptions = null;
@@ -14,9 +13,9 @@ class m130524_201450_init extends Migration
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
-        $userTableWildcardWrapped = '{{%' . $this->userTable . '}}';
+        $userTableWildcardWrapped = '{{%' . Module::getUserTableName() . '}}';
 
-        $this->createTable($this->userTable, [
+        $this->createTable($userTableWildcardWrapped, [
             'id' => $this->bigPrimaryKey(),
             'created_by' => $this->bigInteger()
                 ->notNull()
@@ -44,19 +43,17 @@ class m130524_201450_init extends Migration
 
         ], $tableOptions);
 
-        $this->createIndex('{{%idx-' . $this->userTable . '-username}}', $userTableWildcardWrapped, 'username', true);
-        $this->createIndex('{{%idx-' . $this->userTable . '-email}}', $userTableWildcardWrapped, 'email', true);
-        $this->createIndex('{{%idx-' . $this->userTable . '-phone}}', $userTableWildcardWrapped, 'phone', true);
-        $this->createIndex('{{%idx-' . $this->userTable . '-email_confirm_token}}', $userTableWildcardWrapped, 'email_confirm_token', true);
-        $this->createIndex('{{%idx-' . $this->userTable . '-password_reset_token}}', $userTableWildcardWrapped, 'password_reset_token', true);
+        $this->createIndex('{{%idx-' . Module::getUserTableName() . '-username}}', $userTableWildcardWrapped, 'username', true);
+        $this->createIndex('{{%idx-' . Module::getUserTableName() . '-email}}', $userTableWildcardWrapped, 'email', true);
+        $this->createIndex('{{%idx-' . Module::getUserTableName() . '-phone}}', $userTableWildcardWrapped, 'phone', true);
+        $this->createIndex('{{%idx-' . Module::getUserTableName() . '-email_confirm_token}}', $userTableWildcardWrapped, 'email_confirm_token', true);
+        $this->createIndex('{{%idx-' . Module::getUserTableName() . '-password_reset_token}}', $userTableWildcardWrapped, 'password_reset_token', true);
 
         $this->addColumn($userTableWildcardWrapped, 'verification_token', $this->string()->defaultValue(null));
     }
 
     public function safeDown()
     {
-        $userTableWildcardWrapped = '{{%' . $this->userTable . '}}';
-
-        $this->dropTable($userTableWildcardWrapped);
+        $this->dropTable('{{%' . Module::getUserTableName() . '}}');
     }
 }

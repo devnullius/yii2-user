@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace devnullius\user\entities;
 
+use devnullius\user\Module;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
@@ -18,12 +19,12 @@ use yii\db\ActiveRecord;
  * @property int    $created_at  [bigint]  Unix timestamp of create date.
  * @property int    $updated_at  [bigint]  Unix timestamp of update date.
  * @property string $modifier    [varchar(255)]  Operation performer entity name.
- * @property bool   $deleted     [boolean]  If true row is softly deleted, only marker.
+ * @property bool   $deleted     [boolean]  If true row softly deleted, only marker.
  * @property int    $user_id     [bigint]  System User ID
  * @property string $firebase_id [varchar(255)]  Firebase User ID - Device ID
  * @property User   $user
  */
-class UserDeviceStore extends ActiveRecord
+final class UserDevice extends ActiveRecord
 {
     public static function create(int $userId, string $fireBaseId): self
     {
@@ -36,7 +37,7 @@ class UserDeviceStore extends ActiveRecord
 
     public static function tableName(): string
     {
-        return '{{%user_device_store}}';
+        return '{{%' . Module::getUserDeviceTableName() . '}}';
     }
 
     public function getUser(): ActiveQuery

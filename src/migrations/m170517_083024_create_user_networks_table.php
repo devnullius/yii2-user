@@ -1,10 +1,10 @@
 <?php
 
+use devnullius\user\Module;
 use yii\db\Migration;
 
 class m170517_083024_create_user_networks_table extends Migration
 {
-    private string $userTable = 'system_user';
 
     public function safeUp()
     {
@@ -14,9 +14,7 @@ class m170517_083024_create_user_networks_table extends Migration
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
-        $userTableWildcardWrapped = '{{%' . $this->userTable . '}}';
-
-        $this->createTable('{{%user_networks}}', [
+        $this->createTable('{{%' . Module::getUserNetworkTableName() . '}}', [
             'id' => $this->bigPrimaryKey(),
             'user_id' => $this->bigInteger()->notNull(),
             'identity' => $this->string()->notNull(),
@@ -24,23 +22,23 @@ class m170517_083024_create_user_networks_table extends Migration
         ], $tableOptions);
 
         $this->createIndex(
-            '{{%idx-user_networks-identity-name}}',
-            '{{%user_networks}}',
+            '{{%idx-' . Module::getUserNetworkTableName() . '-identity-name}}',
+            '{{%' . Module::getUserNetworkTableName() . '}}',
             ['identity', 'network'],
             true
         );
 
         $this->createIndex(
-            '{{%idx-user_networks-user_id}}',
-            '{{%user_networks}}',
+            '{{%idx-' . Module::getUserNetworkTableName() . '-user_id}}',
+            '{{%' . Module::getUserNetworkTableName() . '}}',
             'user_id'
         );
 
         $this->addForeignKey(
-            '{{%fk-user_networks-user_id}}',
-            '{{%user_networks}}',
+            '{{%fk-' . Module::getUserNetworkTableName() . '-user_id}}',
+            '{{%' . Module::getUserNetworkTableName() . '}}',
             'user_id',
-            $userTableWildcardWrapped,
+            '{{%' . Module::getUserTableName() . '}}',
             'id',
             'CASCADE'
         );
@@ -48,6 +46,6 @@ class m170517_083024_create_user_networks_table extends Migration
 
     public function safeDown()
     {
-        $this->dropTable('{{%user_networks}}');
+        $this->dropTable('{{%' . Module::getUserNetworkTableName() . '}}');
     }
 }

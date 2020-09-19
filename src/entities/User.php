@@ -5,7 +5,9 @@ namespace devnullius\user\entities;
 
 use devnullius\queue\addon\events\AggregateRoot;
 use devnullius\queue\addon\events\EventTrait;
+use devnullius\user\entities\events\UserSignUpConfirmed;
 use devnullius\user\entities\events\UserSignUpRequested;
+use devnullius\user\Module;
 use DomainException;
 use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
 use Yii;
@@ -17,46 +19,37 @@ use yii\db\ActiveRecord;
 /**
  * User model
  *
- * @property integer            $id
- * @property string             $username
- * @property string             $password_hash
- * @property string             $password_reset_token
- * @property string             $email
- * @property string             $email_confirm_token
- * @property string             $phone
- * @property string             $auth_key
- * @property string             $token
- * @property string             $secret
- * @property integer            $status
- * @property integer            $created_at
- * @property integer            $updated_at
- * @property string             $password               write-only password
+ * @property integer      $id
+ * @property string       $username
+ * @property string       $password_hash
+ * @property string       $password_reset_token
+ * @property string       $email
+ * @property string       $email_confirm_token
+ * @property string       $phone
+ * @property string       $auth_key
+ * @property string       $token
+ * @property string       $secret
+ * @property integer      $status
+ * @property integer      $created_at
+ * @property integer      $updated_at
+ * @property string       $password               write-only password
  *
- * @property Network[]          $networks
- * @property int                $created_by             [bigint]
- * @property int                $updated_by             [bigint]
- * @property string             $modifier               [varchar(255)]
- * @property bool               $deleted                [boolean]
- * @property int                $department_employee_id [bigint]  Employee system identification number.
+ * @property Network[]    $networks
+ * @property int          $created_by             [bigint]
+ * @property int          $updated_by             [bigint]
+ * @property string       $modifier               [varchar(255)]
+ * @property bool         $deleted                [boolean]
+ * @property int          $department_employee_id [bigint]  Employee system identification number.
  *
- * @property UserDeviceStore[]  $devices
+ * @property UserDevice[] $devices
  */
-class User extends ActiveRecord implements AggregateRoot
+final class User extends ActiveRecord implements AggregateRoot, UserEntity
 {
     use EventTrait;
 
     public const STATUS_WAIT = 0;
     public const STATUS_ACTIVE = 10;
 
-    /**
-     * @param string $username
-     * @param string $email
-     * @param string $phone
-     * @param string $password
-     *
-     * @return User
-     * @throws Exception
-     */
     public static function create(string $username, string $email, string $phone, string $password): self
     {
         $user = new self();
@@ -72,26 +65,17 @@ class User extends ActiveRecord implements AggregateRoot
     }
 
     /**
-     * Generates password hash from password and sets it to the model
+     * Generates hash from password string and sets it to the model
      *
      * @param string $password
      *
      * @throws Exception
      */
-    private function setPassword($password)
+    private function setPassword(string $password): void
     {
         $this->password_hash = Yii::$app->security->generatePasswordHash($password);
     }
 
-    /**
-     * @param string $username
-     * @param string $email
-     * @param string $phone
-     * @param string $password
-     *
-     * @return User
-     * @throws Exception
-     */
     public static function requestSignup(string $username, string $email, string $phone, string $password): self
     {
         $user = new self();
@@ -113,7 +97,7 @@ class User extends ActiveRecord implements AggregateRoot
      *
      * @throws Exception
      */
-    private function generateAuthKey()
+    private function generateAuthKey(): void
     {
         $this->auth_key = Yii::$app->security->generateRandomString();
     }
@@ -125,7 +109,7 @@ class User extends ActiveRecord implements AggregateRoot
      * @return User
      * @throws Exception
      */
-    public static function signupByNetwork($network, $identity): self
+    public static function signupByNetwork(string $network, string $identity): self
     {
         $user = new self();
         $user->created_at = time();
@@ -141,7 +125,7 @@ class User extends ActiveRecord implements AggregateRoot
      */
     public static function tableName(): string
     {
-        return '{{%user}}';
+        return '{{%' . Module::getUserTableName() . '}}';
     }
 
     /**
@@ -151,7 +135,7 @@ class User extends ActiveRecord implements AggregateRoot
      *
      * @return static|null
      */
-    public static function findByUsername($username)
+    public static function findByUsername(string $username): ?self
     {
         return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
     }
@@ -163,7 +147,7 @@ class User extends ActiveRecord implements AggregateRoot
      *
      * @return static|null
      */
-    public static function findByPasswordResetToken($token)
+    public static function findByPasswordResetToken(string $token): ?self
     {
         if (!static::isPasswordResetTokenValid($token)) {
             return null;
@@ -182,7 +166,7 @@ class User extends ActiveRecord implements AggregateRoot
      *
      * @return bool
      */
-    public static function isPasswordResetTokenValid($token): bool
+    public static function isPasswordResetTokenValid(string $token): bool
     {
         if (empty($token)) {
             return false;
@@ -196,7 +180,7 @@ class User extends ActiveRecord implements AggregateRoot
 
     public function getDevices(): ActiveQuery
     {
-        return $this->hasMany(UserDeviceStore::class, ['user_id' => 'id']);
+        return $this->hasMany(UserDevice::class, ['user_id' => 'id']);
     }
 
     public function edit(string $username, string $email, string $phone): void
@@ -229,7 +213,7 @@ class User extends ActiveRecord implements AggregateRoot
         return $this->status === self::STATUS_WAIT;
     }
 
-    public function attachNetwork($network, $identity): void
+    public function attachNetwork(string $network, string $identity): void
     {
         $networks = $this->networks;
         foreach ($networks as $current) {
@@ -257,7 +241,7 @@ class User extends ActiveRecord implements AggregateRoot
      *
      * @throws Exception
      */
-    public function resetPassword($password): void
+    public function resetPassword(string $password): void
     {
         if (empty($this->password_reset_token)) {
             throw new DomainException('Password resetting is not requested.');
@@ -304,7 +288,7 @@ class User extends ActiveRecord implements AggregateRoot
      *
      * @return bool if password provided is valid for current user
      */
-    public function validatePassword($password): bool
+    public function validatePassword(string $password): bool
     {
         return Yii::$app->security->validatePassword($password, $this->password_hash);
     }

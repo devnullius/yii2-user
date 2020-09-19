@@ -1,19 +1,17 @@
 <?php
 
+use devnullius\user\Module;
 use yii\db\Migration;
 
 class m140614_184308_add_sysadmin_user extends Migration
 {
-    private string $userTable = 'system_user';
 
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-        $userTableWildcardWrapped = '{{%' . $this->userTable . '}}';
-
-        $this->insert($userTableWildcardWrapped, [
+        $this->insert('{{%' . Module::getUserTableName() . '}}', [
             'id' => 1,
             'username' => 'sysadmin',
             'auth_key' => 'B7asUsSVv9qWuUxojpcTOjm6FctcdN7m',
@@ -33,8 +31,6 @@ class m140614_184308_add_sysadmin_user extends Migration
      */
     public function safeDown()
     {
-        $userTableWildcardWrapped = '{{%' . $this->userTable . '}}';
-
-        $this->delete($userTableWildcardWrapped, ['id' => 1]);
+        $this->delete('{{%' . Module::getUserTableName() . '}}', ['id' => 1]);
     }
 }

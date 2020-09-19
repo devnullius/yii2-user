@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace devnullius\user\entities;
 
+use devnullius\user\Module;
 use Webmozart\Assert\Assert;
 use yii\db\ActiveRecord;
 
@@ -12,9 +13,9 @@ use yii\db\ActiveRecord;
  * @property string  $network
  * @property string  $id [integer]
  */
-class Network extends ActiveRecord
+final class Network extends ActiveRecord
 {
-    public static function create($network, $identity): self
+    public static function create(string $network, string $identity): self
     {
         Assert::notEmpty($network);
         Assert::notEmpty($identity);
@@ -28,10 +29,10 @@ class Network extends ActiveRecord
 
     public static function tableName(): string
     {
-        return '{{%user_networks}}';
+        return '{{%' . Module::getUserNetworkTableName() . '}}';
     }
 
-    public function isFor($network, $identity): bool
+    public function isFor(string $network, string $identity): bool
     {
         return $this->network === $network && $this->identity === $identity;
     }

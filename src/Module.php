@@ -10,6 +10,10 @@ use yii\i18n\PhpMessageSource;
 class Module extends BaseModule
 {
     public const VERSION = '1.0.0';
+    private static string $userTableName = 'system_user';
+    private static string $userNetworkTableName = 'system_user_network';
+    private static string $userDeviceTableName = 'system_user_device';
+
     /**
      * {@inheritdoc}
      */
@@ -38,6 +42,21 @@ class Module extends BaseModule
                 'basePath' => __DIR__ . '/messages',
             ];
         }
+    }
+
+    final public static function getUserTableName(): string
+    {
+        return static::$userTableName;
+    }
+
+    final public static function getUserNetworkTableName(): string
+    {
+        return static::$userTableName;
+    }
+
+    final public static function getUserDeviceTableName(): string
+    {
+        return static::$userTableName;
     }
 
     /**

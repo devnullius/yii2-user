@@ -9,7 +9,10 @@ use devnullius\user\forms\UserCreateForm;
 use devnullius\user\forms\UserEditForm;
 use devnullius\user\repositories\UserRepository;
 use devnullius\user\services\RoleManager;
+use Exception;
+use Throwable;
 use Yii;
+use yii\db\StaleObjectException;
 
 final class UserManageService
 {
@@ -35,15 +38,19 @@ final class UserManageService
             $form->phone,
             $form->password
         );
-        $this->transaction->wrap(function () use ($user, $form) {
-            $this->repository->save($user);
-            $this->roles->assign($user->id, $form->role);
-        });
+        try {
+            $this->transaction->wrap(function () use ($user, $form) {
+                $this->repository->save($user);
+                $this->roles->assign($user->id, $form->role);
+            });
+        } catch (Exception $e) {
+            Yii::$app->errorHandler->logException($e);
+        }
 
         return $user;
     }
 
-    public function edit($id, UserEditForm $form): void
+    public function edit(int $id, UserEditForm $form): void
     {
         $user = $this->repository->get($id);
         $user->edit(
@@ -51,26 +58,40 @@ final class UserManageService
             $form->email,
             $form->phone
         );
-        $this->transaction->wrap(function () use ($user, $form) {
+        try {
+            $this->transaction->wrap(function () use ($user, $form) {
 
-            if ((bool)$form->generateTokens === true) {
-                $user->token = Yii::$app->security->generateRandomString();
-                $user->secret = Yii::$app->security->generateRandomString();
-            }
-            $this->repository->save($user);
-            $this->roles->assign($user->id, $form->role);
-        });
+                if ((bool)$form->generateTokens === true) {
+                    $user->token = Yii::$app->security->generateRandomString();
+                    $user->secret = Yii::$app->security->generateRandomString();
+                }
+                $this->repository->save($user);
+                $this->roles->assign($user->id, $form->role);
+            });
+        } catch (Exception $e) {
+            Yii::$app->errorHandler->logException($e);
+        }
     }
 
-    public function assignRole($id, $role): void
+    public function assignRole(int $id, string $role): void
     {
         $user = $this->repository->get($id);
-        $this->roles->assign($user->id, $role);
+        try {
+            $this->roles->assign($user->id, $role);
+        } catch (Exception $e) {
+            Yii::$app->errorHandler->logException($e);
+        }
     }
 
     public function remove(int $id): void
     {
         $user = $this->repository->get($id);
-        $this->repository->remove($user);
+        try {
+            $this->repository->remove($user);
+        } catch (StaleObjectException $e) {
+            Yii::$app->errorHandler->logException($e);
+        } catch (Throwable $e) {
+            Yii::$app->errorHandler->logException($e);
+        }
     }
 }
