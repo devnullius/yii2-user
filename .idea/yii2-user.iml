@@ -10,11 +10,13 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/bower-asset/punycode" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/bower-asset/yii2-pjax" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/brick/math" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/bshaffer/oauth2-server-php" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/cebe/markdown" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/devnullius/yii2-queue-addon" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/instantiator" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/ezyang/htmlpurifier" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/filsh/yii2-oauth2-server" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/kartik-v/yii2-field-range" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/kartik-v/yii2-helpers" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/kartik-v/yii2-krajee-base" />
