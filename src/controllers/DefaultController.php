@@ -8,6 +8,7 @@ use devnullius\user\actions\DeleteExtAction;
 use devnullius\user\actions\IndexExtAction;
 use devnullius\user\entities\User;
 use devnullius\user\forms\UserCreateForm;
+use devnullius\user\forms\UserEditForm;
 use devnullius\user\search\UserSearch;
 use devnullius\user\useCases\UserManageService;
 use DomainException;

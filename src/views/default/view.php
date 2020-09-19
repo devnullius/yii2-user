@@ -1,12 +1,14 @@
 <?php
 
-use core\helpers\UserHelper;
+use devnullius\user\entities\User;
+use devnullius\user\helpers\UserHelper;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\DetailView;
 
-/* @var $this yii\web\View */
-/* @var $model core\entities\User\User */
+assert($this instanceof View);
+assert($model instanceof User);
 
 $this->title = 'Login: ' . $model->username . ' Email: ' . $model->email;
 $this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
@@ -31,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
     <div class="card-body">
-        
+
         <?= DetailView::widget([
             'model' => $model,
             'attributes' => [
@@ -39,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'username',
                 'email:email',
                 'phone',
-                
+
                 [
                     'attribute' => 'status',
                     'value' => UserHelper::statusLabel($model->status),
@@ -56,11 +58,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 'updated_at:datetime',
             ],
         ]) ?>
-        
+
     </div>
     <!-- /.card-body -->
     <div class="card-footer">
-    
+
     </div>
     <!-- /.card-footer-->
 </div>

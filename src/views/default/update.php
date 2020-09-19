@@ -1,21 +1,23 @@
 <?php
 
-/* @var $this yii\web\View */
-/* @var $model core\forms\manage\User\UserEditForm */
+/* @var $this View */
+/* @var $model UserEditForm */
 
-/* @var $user core\entities\User\User */
+/* @var $user User */
 
-use basic\assets\Select2Asset;
-use basic\widgets\Select2;
+use devnullius\user\entities\User;
+use devnullius\user\forms\UserEditForm;
 use devnullius\user\Module;
+use devnullius\user\widgets\Select2;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
+use yii\web\View;
 
 $this->title = 'Update User: ' . $user->id;
 $this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $user->id, 'url' => ['view', 'id' => $user->id]];
 $this->params['breadcrumbs'][] = 'Update';
-Select2Asset::register($this);
+
 ?>
 <!-- Default box -->
 <div class="card card-outline card-success">
