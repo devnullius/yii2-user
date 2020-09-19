@@ -7,6 +7,7 @@
 
 use basic\assets\Select2Asset;
 use basic\widgets\Select2;
+use devnullius\user\Module;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
 
@@ -31,7 +32,7 @@ Select2Asset::register($this);
         <div class="row">
             <div class="col-6">
                 <?php $form = ActiveForm::begin(); ?>
-                
+
                 <?= $form->field($model, 'username')->textInput(['maxLength' => true]) ?>
                 <?= $form->field($model, 'email')->textInput(['maxLength' => true]) ?>
                 <?= $form->field($model, 'phone')->textInput(['maxLength' => true]) ?>
@@ -40,21 +41,22 @@ Select2Asset::register($this);
                     [
                         'data' => $model->rolesList(),
                         //                                    'tags' => ['multiple' => true],
-                        'prompt' => Yii::t('basic', 'Role ...'),
-                    ]) ?>
+                        'prompt' => Module::t('basic', 'Role ...'),
+                    ]
+                ) ?>
                 <?= $form->field($model, 'generateTokens')->checkbox() ?>
-                
+
                 <div class="form-group">
                     <?= Html::submitButton('Save', ['class' => 'btn btn-primary']) ?>
                 </div>
-                
+
                 <?php ActiveForm::end(); ?>
             </div>
         </div>
     </div>
     <!-- /.card-body -->
     <div class="card-footer">
-    
+
     </div>
     <!-- /.card-footer-->
 </div>

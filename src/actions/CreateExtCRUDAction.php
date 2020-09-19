@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace devnullius\user\actions;
 
 use core\interfaces\service\CreateService;
+use devnullius\user\Module;
 use DomainException;
 use Yii;
 use yii\base\Action;
@@ -31,19 +32,16 @@ abstract class CreateExtCRUDAction extends Action
         $form = new $this->form();
 
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
-
             try {
-
                 $user = $this->service->{$this->serviceAction}($form);
 
-                Yii::$app->session->setFlash('success', Yii::t('basic', 'Item successfully created.'));
+                Yii::$app->session->setFlash('success', Module::t('basic', 'Item successfully created.'));
 
                 return $this->controller->redirect([$this->redirectView, 'id' => $user->id]);
             } catch (DomainException $e) {
                 Yii::$app->errorHandler->logException($e);
                 Yii::$app->session->setFlash('error', $e->getMessage());
             }
-
         }
 
         return $this->controller->render(

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace devnullius\user\actions;
 
 use core\interfaces\service\RemoveService;
+use devnullius\user\Module;
 use Exception;
 use Yii;
 use yii\base\Action;
@@ -23,7 +24,7 @@ abstract class DeleteExtCRUDAction extends Action
         try {
             $entity = null;
             $this->service->remove($id, $entity);
-            Yii::$app->session->setFlash('warning', Yii::t('basic', 'Item {uid} successfully deleted.', ['uid' => $entity->uid ?? $id]));
+            Yii::$app->session->setFlash('warning', Module::t('basic', 'Item {uid} successfully deleted.', ['uid' => $entity->uid ?? $id]));
         } catch (Exception $e) {
             Yii::$app->session->setFlash('danger', $e->getMessage());
         }

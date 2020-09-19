@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace devnullius\user\actions;
 
+use devnullius\user\Module;
 use Exception;
 use Throwable;
 use Yii;
@@ -14,6 +15,7 @@ use yii\web\Response;
 abstract class DeleteStdCRUDAction extends Action
 {
     use StdCRUDActionsTrait;
+
     public $redirectPath = 'index';
 
     /**
@@ -30,10 +32,10 @@ abstract class DeleteStdCRUDAction extends Action
         try {
             $model = $this->findModelById($id);
             if (!$model->delete()) {
-                throw new ErrorException(Yii::t('basic', 'Item delete error. {errors}', ['errors' => Json::encode($model->getErrors())]));
+                throw new ErrorException(Module::t('basic', 'Item delete error. {errors}', ['errors' => Json::encode($model->getErrors())]));
             }
             $transaction->commit();
-            Yii::$app->session->setFlash('success', Yii::t('basic', 'Item successfully deleted.'));
+            Yii::$app->session->setFlash('success', Module::t('basic', 'Item successfully deleted.'));
         } catch (Exception $e) {
             $transaction->rollBack();
             Yii::$app->session->setFlash('danger', $e->getMessage());

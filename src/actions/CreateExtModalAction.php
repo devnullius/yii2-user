@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace devnullius\user\actions;
 
+use devnullius\user\Module;
 use DomainException;
 use Yii;
 use yii\base\Model;
@@ -27,19 +28,16 @@ class CreateExtModalAction extends CreateExtCRUDAction
         }
 
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
-
             try {
-
                 $entity = $this->service->{$this->serviceAction}($form);
 
-                Yii::$app->session->setFlash('success', Yii::t('basic', 'Item {uid} successfully created.', ['uid' => $entity->uid ?? $entity->id]));
+                Yii::$app->session->setFlash('success', Module::t('basic', 'Item {uid} successfully created.', ['uid' => $entity->uid ?? $entity->id]));
 
                 return $this->controller->redirect($this->redirectView);
             } catch (DomainException $e) {
                 Yii::$app->errorHandler->logException($e);
                 Yii::$app->session->setFlash('error', $e->getMessage());
             }
-
         }
 
         return $this->controller->redirect($this->redirectOnFailRoute);

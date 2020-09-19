@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace devnullius\user\helpers;
 
 use devnullius\user\entities\User;
-use Yii;
+use devnullius\user\Module;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
@@ -18,8 +18,8 @@ class UserHelper
     public static function statusList(): array
     {
         return [
-            User::STATUS_WAIT => Yii::t('core', 'Wait'),
-            User::STATUS_ACTIVE => Yii::t('core', 'Active'),
+            User::STATUS_WAIT => Module::t('core', 'Wait'),
+            User::STATUS_ACTIVE => Module::t('core', 'Active'),
         ];
     }
 

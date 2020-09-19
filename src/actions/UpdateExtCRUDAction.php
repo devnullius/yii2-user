@@ -5,6 +5,7 @@ namespace devnullius\user\actions;
 
 use core\interfaces\repository\GetRepository;
 use core\interfaces\service\EditService;
+use devnullius\user\Module;
 use DomainException;
 use Yii;
 use yii\base\Action;
@@ -46,19 +47,16 @@ abstract class UpdateExtCRUDAction extends Action
         }
 
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
-
             try {
-
                 $entity = $this->service->{$this->serviceAction}($form);
 
-                Yii::$app->session->setFlash('success', Yii::t('basic', 'Item {uid} successfully updated.', ['uid' => $entity->uid ?? $id]));
+                Yii::$app->session->setFlash('success', Module::t('basic', 'Item {uid} successfully updated.', ['uid' => $entity->uid ?? $id]));
 
                 return $this->controller->redirect([$this->redirectView, 'id' => $entity->id]);
             } catch (DomainException $e) {
                 Yii::$app->errorHandler->logException($e);
                 Yii::$app->session->setFlash('error', $e->getMessage());
             }
-
         }
 
         return $this->controller->render(

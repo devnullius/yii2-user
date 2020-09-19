@@ -3,11 +3,6 @@ declare(strict_types=1);
 
 namespace devnullius\user\actions;
 
-use DomainException;
-use Yii;
-use yii\base\Model;
-use yii\db\ActiveRecordInterface;
-
 class UpdateExtModalAction extends UpdateExtCRUDAction
 {
     public $redirectOnFailRoute = ['index'];
@@ -26,8 +21,8 @@ class UpdateExtModalAction extends UpdateExtCRUDAction
 //
 //                $entity = $this->service->{$this->serviceAction}($entity);
 //
-//                Yii::$app->session->setFlash('success', Yii::t('basic', 'Item changes successfully saved.'));
-//
+    //                Yii::$app->session->setFlash('success', Module::t('basic', 'Item changes successfully saved.'));
+    //
 //                return $this->controller->redirect([$this->redirectView, 'id' => $entity->id]);
 //            } catch (DomainException $e) {
 //                Yii::$app->errorHandler->logException($e);

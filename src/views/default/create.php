@@ -1,6 +1,8 @@
 <?php
 
 use devnullius\user\forms\UserCreateForm;
+use devnullius\user\Module;
+use devnullius\user\widgets\Select2;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ActiveForm;
@@ -38,8 +40,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'data' => $model->rolesList(),
                         //                                    'tags' => ['multiple' => true],
-                        'prompt' => Yii::t('basic', 'Role ...'),
-                    ]) ?>
+                        'prompt' => Module::t('basic', 'Role ...'),
+                    ]
+                ) ?>
 
                 <div class="form-group">
                     <?= Html::submitButton('Save', ['class' => 'btn btn-primary']) ?>

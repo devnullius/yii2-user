@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace devnullius\user\actions;
 
+use devnullius\user\Module;
 use Exception;
 use Yii;
 use yii\base\Action;
@@ -34,12 +35,11 @@ abstract class UpdateStdCRUDAction extends Action
             $db = Yii::$app->db;
             $transaction = $db->beginTransaction();
             try {
-
                 if (!$model->save()) {
-                    throw new ErrorException(Yii::t('basic', 'Item save error. {errors}', ['errors' => Json::encode($model->getErrors())]));
+                    throw new ErrorException(Module::t('basic', 'Item save error. {errors}', ['errors' => Json::encode($model->getErrors())]));
                 }
                 $transaction->commit();
-                Yii::$app->session->setFlash('success', Yii::t('basic', 'Item successfully updated.'));
+                Yii::$app->session->setFlash('success', Module::t('basic', 'Item successfully updated.'));
             } catch (Exception $e) {
                 $transaction->rollBack();
                 Yii::$app->session->setFlash('danger', $e->getMessage());

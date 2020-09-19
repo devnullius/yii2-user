@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace devnullius\user\widgets\grid;
 
-use Yii;
+use devnullius\user\Module;
 use yii\helpers\Html;
 use function array_merge;
 use function strpos;
@@ -19,7 +19,7 @@ class ActionColumn extends \yii\grid\ActionColumn
         $this->initDefaultButton('view', 'eye');
         $this->initDefaultButton('update', 'edit');
         $this->initDefaultButton('delete', 'trash-alt', [
-            'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
+            'data-confirm' => Module::t('yii', 'Are you sure you want to delete this item?'),
             'data-method' => 'post',
         ]);
     }
@@ -37,13 +37,13 @@ class ActionColumn extends \yii\grid\ActionColumn
             $this->buttons[$name] = function ($url, $model, $key) use ($name, $iconName, $additionalOptions) {
                 switch ($name) {
                     case 'view':
-                        $title = Yii::t('yii', 'View');
+                        $title = Module::t('yii', 'View');
                         break;
                     case 'update':
-                        $title = Yii::t('yii', 'Update');
+                        $title = Module::t('yii', 'Update');
                         break;
                     case 'delete':
-                        $title = Yii::t('yii', 'Delete');
+                        $title = Module::t('yii', 'Delete');
                         break;
                     default:
                         $title = ucfirst($name);
