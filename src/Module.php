@@ -5,7 +5,6 @@ namespace devnullius\user;
 
 use Yii;
 use yii\base\Module as BaseModule;
-use yii\i18n\PhpMessageSource;
 
 class Module extends BaseModule
 {
@@ -36,12 +35,12 @@ class Module extends BaseModule
      */
     final public function registerTranslations(): void
     {
-        if (!isset(Yii::$app->get('i18n')->translations['modules/user/*'])) {
-            Yii::$app->get('i18n')->translations['modules/user/*'] = [
-                'class' => PhpMessageSource::class,
-                'basePath' => __DIR__ . '/messages',
-            ];
-        }
+        //        if (!isset(Yii::$app->get('i18n')->translations['modules/user/*'])) {
+        //            Yii::$app->get('i18n')->translations['modules/user/*'] = [
+        //                'class' => PhpMessageSource::class,
+        //                'basePath' => __DIR__ . '/messages',
+        //            ];
+        //        }
     }
 
     final public static function getUserTableName(): string
