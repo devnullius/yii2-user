@@ -5,6 +5,7 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=7.4 < 8.0",
+        "devnullius/yii2-helper": "^1.0",
         "devnullius/yii2-queue-addon": "^1.0",
         "filsh/yii2-oauth2-server": "^2.1",
         "kartik-v/yii2-field-range": "^1.3",
@@ -35,6 +36,10 @@
         {
             "type": "composer",
             "url": "https://asset-packagist.org"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:devnullius/yii2-helper.git"
         }
     ],
     "autoload": {

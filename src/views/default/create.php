@@ -1,8 +1,8 @@
 <?php
 
+use devnullius\helper\widgets\Select2;
 use devnullius\user\forms\UserCreateForm;
 use devnullius\user\Module;
-use devnullius\user\widgets\Select2;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ActiveForm;

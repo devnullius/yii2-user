@@ -5,10 +5,10 @@
 
 /* @var $user User */
 
+use devnullius\helper\widgets\Select2;
 use devnullius\user\entities\User;
 use devnullius\user\forms\UserEditForm;
 use devnullius\user\Module;
-use devnullius\user\widgets\Select2;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
 use yii\web\View;

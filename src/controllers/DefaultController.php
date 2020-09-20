@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace devnullius\user\controllers;
 
-use devnullius\user\actions\CreateExtAction;
-use devnullius\user\actions\DeleteExtAction;
-use devnullius\user\actions\IndexExtAction;
+use devnullius\helper\actions\CreateExtAction;
+use devnullius\helper\actions\DeleteExtAction;
+use devnullius\helper\actions\IndexExtAction;
 use devnullius\user\entities\User;
 use devnullius\user\forms\UserCreateForm;
 use devnullius\user\forms\UserEditForm;

@@ -67,6 +67,7 @@
       <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-helpers" />
       <path value="$PROJECT_DIR$/vendor/filsh/yii2-oauth2-server" />
       <path value="$PROJECT_DIR$/vendor/bshaffer/oauth2-server-php" />
+      <path value="$PROJECT_DIR$/vendor/devnullius/yii2-helper" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.4" />

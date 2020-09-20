@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace devnullius\user\repositories;
 
+use devnullius\helper\exceptions\NotFoundException;
 use devnullius\queue\addon\dispatchers\EventDispatcher;
 use devnullius\user\entities\User;
 use RuntimeException;

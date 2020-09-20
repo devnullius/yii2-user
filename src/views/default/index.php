@@ -1,10 +1,10 @@
 <?php
 
+use devnullius\helper\widgets\grid\ActionColumn;
+use devnullius\helper\widgets\grid\RoleColumn;
 use devnullius\user\entities\User;
 use devnullius\user\helpers\UserHelper;
 use devnullius\user\search\UserSearch;
-use devnullius\user\widgets\grid\ActionColumn;
-use devnullius\user\widgets\grid\RoleColumn;
 use kartik\date\DatePicker;
 use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
