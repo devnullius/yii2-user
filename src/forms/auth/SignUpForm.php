@@ -11,11 +11,11 @@ use yii\base\Model;
  */
 final class SignUpForm extends Model
 {
-    public string $username;
-    public string $email;
+    public $username;
+    public $email;
     public $phone;
-    public string $password;
-    public string $passwordRepeat;
+    public $password;
+    public $passwordRepeat;
 
     /**
      * @inheritdoc

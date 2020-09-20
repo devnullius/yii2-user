@@ -8,7 +8,7 @@ use yii\base\Model;
 
 final class PasswordResetRequestForm extends Model
 {
-    public string $email;
+    public $email;
 
     public function rules(): array
     {

@@ -43,7 +43,7 @@ final class AuthController extends Controller
             return $this->goHome();
         }
 
-        $this->layout = 'main-login';
+        $this->layout = '/main-login';
 
         $form = new LoginForm();
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {

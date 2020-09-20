@@ -7,9 +7,9 @@ use yii\base\Model;
 
 final class LoginForm extends Model
 {
-    public string $username;
-    public string $password;
-    public bool $rememberMe = true;
+    public $username;
+    public $password;
+    public $rememberMe = true;
 
     public function rules(): array
     {
